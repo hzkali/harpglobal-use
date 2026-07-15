@@ -52,12 +52,19 @@ export default function TrendyProductsView({
   // Calculate estimated total land-cost including customs & shipping
   const getEstimatedCosts = (priceUSD: number, category: string) => {
     const isCosmetics = category === "cosmetics";
-    const customsRate = isCosmetics ? 0.30 : 0.20; // Kozmetikte vergi yükü daha fazla
     const estimatedWeight = isCosmetics ? 0.4 : 1.5; // Tahmini ağırlık kg
     
-    const customsTax = priceUSD * customsRate;
+    // Gümrük Vergisi: %60 of product price.
+    const customsTax = priceUSD * 0.60;
+    
+    // Uluslararası Kargo Bedeli: 1 kg için 25 dolar, sonraki her kg için 10 dolar
     const shipping = estimatedWeight <= 1 ? 25 : 25 + (estimatedWeight - 1) * 10;
-    const serviceFee = 5.00;
+    
+    // Altyapı & Hizmet Bedeli: kg başına $40 veya her $100 ürün bedeli için $40 (hangisi yüksekse)
+    const weightBasedFee = estimatedWeight * 40;
+    const priceBasedFee = Math.ceil(priceUSD / 100) * 40;
+    const serviceFee = Math.max(weightBasedFee, priceBasedFee);
+    
     const total = priceUSD + customsTax + shipping + serviceFee;
     
     return {
@@ -203,12 +210,18 @@ export default function TrendyProductsView({
                           <span className="text-slate-500">Yurt dışı ürün fiyatı:</span>
                           <span className="font-mono font-bold text-slate-700">${prod.priceUSD.toFixed(2)}</span>
                         </div>
-                        <div className="flex justify-between items-center text-xs">
-                          <span className="text-slate-500 flex items-center gap-1">
-                            Resmi Gümrük Vergisi ({prod.category === "cosmetics" ? "%30" : "%20"}):
-                            <Info className="w-3 h-3 text-slate-400 cursor-help" title="Mali Müşavir beyannameli resmi ithalat gümrükleme vergisi" />
-                          </span>
-                          <span className="font-mono text-slate-600">+${estimate.customsTax.toFixed(2)}</span>
+                        <div className="space-y-1">
+                          <div className="flex justify-between items-center text-xs">
+                            <span className="text-slate-500 flex items-center gap-1">
+                              Müşavir Onaylı Gümrük Vergisi (%60):
+                              <Info className="w-3 h-3 text-slate-400 cursor-help" title="Mali Müşavir beyannameli resmi ithalat gümrükleme vergisi" />
+                            </span>
+                            <span className="font-mono text-slate-600">+${estimate.customsTax.toFixed(2)}</span>
+                          </div>
+                          <div className="text-[10px] text-amber-600 font-sans text-left flex items-start gap-1 bg-amber-50/40 border border-amber-100/50 rounded-lg p-1.5">
+                            <span>⚠️</span>
+                            <span><strong>Uyarı:</strong> Bu ücret Türkiye Cumhuriyeti'ne gümrük vergisi olarak ödenmektedir.</span>
+                          </div>
                         </div>
                         <div className="flex justify-between items-center text-xs">
                           <span className="text-slate-500">Hava Kargo + Dağıtım:</span>
@@ -218,9 +231,12 @@ export default function TrendyProductsView({
                           <span className="text-slate-500">Müşavir & Hizmet Bedeli:</span>
                           <span className="font-mono text-slate-600">+${estimate.serviceFee.toFixed(2)}</span>
                         </div>
-                        <div className="border-t border-slate-200/60 pt-2 flex justify-between items-center">
+                        <div className="border-t border-slate-200/60 pt-2 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
                           <span className="text-xs font-bold text-brand-navy">Kapınıza Teslim Toplam:</span>
-                          <span className="font-mono font-extrabold text-brand-orange text-base">${estimate.total.toFixed(2)}</span>
+                          <div className="text-right">
+                            <span className="font-mono font-extrabold text-brand-orange text-base block">${estimate.total.toFixed(2)} USD</span>
+                            <span className="font-sans font-semibold text-slate-500 text-xs block">{(estimate.total * 49).toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TL</span>
+                          </div>
                         </div>
                       </div>
                     </div>

@@ -96,10 +96,30 @@ export default function CustomCalculator({ initialUrl, onAddCalculatedOrder }: C
     handleCalculate();
   }, [price, weightKg, category, country]);
 
-  // Extract initial info if user pasted a link in hero
+  // Extract initial info if user pasted a link in hero or selected a trend product
   useEffect(() => {
     if (initialUrl) {
-      if (initialUrl.includes("sephora")) {
+      if (initialUrl.includes("photo-1620916566398") || initialUrl.includes("toast") || initialUrl.includes("rhode")) {
+        setPrice(24);
+        setWeightKg(0.4);
+        setCategory("cosmetics");
+        setProductTitle("Rhode Peptide Lip Tint - Toast");
+      } else if (initialUrl.includes("photo-1546435770") || initialUrl.includes("airpods") || initialUrl.includes("max")) {
+        setPrice(549);
+        setWeightKg(1.5);
+        setCategory("electronics");
+        setProductTitle("AirPods Max Silver Noise Cancelling");
+      } else if (initialUrl.includes("photo-1685361288") || initialUrl.includes("stanley") || initialUrl.includes("quencher")) {
+        setPrice(45);
+        setWeightKg(1.5);
+        setCategory("other");
+        setProductTitle("Stanley Quencher H2.0 FlowState 40oz");
+      } else if (initialUrl.includes("photo-1593113630") || initialUrl.includes("knife") || initialUrl.includes("dalstrong")) {
+        setPrice(189);
+        setWeightKg(1.5);
+        setCategory("other");
+        setProductTitle("Dalstrong Gladiator Series 8-Piece Knife Block Set");
+      } else if (initialUrl.includes("sephora")) {
         setCategory("cosmetics");
         setProductTitle("Yurt Dışı Kozmetik Ürünü");
       } else if (initialUrl.includes("amazon") || initialUrl.includes("ebay") || initialUrl.includes("walmart")) {

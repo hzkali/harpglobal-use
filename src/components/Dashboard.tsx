@@ -53,7 +53,7 @@ export default function Dashboard({ orders, onAddOrder, onUpdateOrderStatus }: D
     const itemWeight = parseFloat(buyWeight) || 0.1;
     
     // Core logic
-    const shippingCostUSD = itemWeight <= 4 ? 140 : 140 + (itemWeight - 4) * 22;
+    const shippingCostUSD = itemWeight <= 1 ? 25 : 25 + (itemWeight - 1) * 10;
     
     let customsTaxUSD = 0;
     if (buyCategory === "supplements") {
@@ -106,7 +106,7 @@ export default function Dashboard({ orders, onAddOrder, onUpdateOrderStatus }: D
     const itemWeight = 1.0; // standard forwarding package estimate
     
     // Core logic
-    const shippingCostUSD = itemWeight <= 4 ? 140 : 140 + (itemWeight - 4) * 22;
+    const shippingCostUSD = itemWeight <= 1 ? 25 : 25 + (itemWeight - 1) * 10;
     const customsTaxUSD = itemPrice * 0.60;
     
     const weightBasedFee = itemWeight * 40;
