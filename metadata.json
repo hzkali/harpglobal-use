@@ -1,0 +1,8 @@
+{
+  "name": "Remix: Harp Global",
+  "description": "Dünyayı Kapınıza Getiren Güvenilir Köprünüz: ABD ve İngiltere\u0027den kapınıza %100 güvenli, gümrüklemesiz ve hızlı lojistik köprüsü.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

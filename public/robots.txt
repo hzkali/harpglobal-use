@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://harpglobal.com.tr/sitemap.xml
