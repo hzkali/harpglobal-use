@@ -10,13 +10,14 @@ import HowItWorksView from "./components/HowItWorksView";
 import HarpGlobalTechView from "./components/HarpGlobalTechView";
 import CalculatorView from "./components/CalculatorView";
 import TrendyProductsView from "./components/TrendyProductsView";
+import WarehousesView from "./components/WarehousesView";
 import Footer from "./components/Footer";
 import { INITIAL_ORDERS } from "./data";
 import { InternationalOrder, TrendProduct } from "./types";
 import { Globe, ShieldCheck, Check, Sparkles, AlertCircle, ShoppingBag, Truck } from "lucide-react";
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<"home" | "dashboard" | "how-it-works" | "about-us" | "calculator" | "trend-products">("home");
+  const [activeTab, setActiveTab] = useState<"home" | "dashboard" | "how-it-works" | "about-us" | "calculator" | "trend-products" | "warehouses">("home");
   const [aiOpen, setAiOpen] = useState(false);
   const [orders, setOrders] = useState<InternationalOrder[]>([]);
   const [pastedUrl, setPastedUrl] = useState<string>("");
@@ -276,6 +277,12 @@ export default function App() {
           <TrendyProductsView 
             onBackToHome={() => setActiveTab("home")} 
             onSelectProduct={handleSelectTrendProduct}
+            setActiveTab={setActiveTab}
+          />
+        ) : activeTab === "warehouses" ? (
+          /* TAB: WAREHOUSES PAGE */
+          <WarehousesView 
+            onBackToHome={() => setActiveTab("home")}
             setActiveTab={setActiveTab}
           />
         ) : (

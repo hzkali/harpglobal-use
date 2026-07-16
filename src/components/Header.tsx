@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Ship, Globe, Clock, Menu, X, ArrowRight, User, HelpCircle, ShieldCheck } from "lucide-react";
 
 interface HeaderProps {
-  activeTab: "home" | "dashboard" | "how-it-works" | "about-us" | "calculator" | "trend-products";
-  setActiveTab: (tab: "home" | "dashboard" | "how-it-works" | "about-us" | "calculator" | "trend-products") => void;
+  activeTab: "home" | "dashboard" | "how-it-works" | "about-us" | "calculator" | "trend-products" | "warehouses";
+  setActiveTab: (tab: "home" | "dashboard" | "how-it-works" | "about-us" | "calculator" | "trend-products" | "warehouses") => void;
   onOpenAIAssistant: () => void;
   onScrollToSection: (sectionId: string) => void;
 }
@@ -104,6 +104,14 @@ export default function Header({ activeTab, setActiveTab, onOpenAIAssistant, onS
             }`}
           >
             Trend Ürünler
+          </button>
+          <button 
+            onClick={() => setActiveTab("warehouses")}
+            className={`font-medium text-sm transition-colors cursor-pointer ${
+              activeTab === "warehouses" ? "text-brand-orange font-bold" : "text-slate-600 hover:text-brand-orange"
+            }`}
+          >
+            Depolarımız
           </button>
           <button 
             onClick={() => handleNavClick("guides")}
@@ -217,6 +225,17 @@ export default function Header({ activeTab, setActiveTab, onOpenAIAssistant, onS
               }`}
             >
               Trend Ürünler
+            </button>
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setActiveTab("warehouses");
+              }}
+              className={`block w-full text-left px-3 py-2.5 rounded-xl hover:bg-slate-50 font-medium ${
+                activeTab === "warehouses" ? "text-brand-orange font-bold bg-orange-50/50" : "text-slate-700 hover:text-brand-orange"
+              }`}
+            >
+              Depolarımız
             </button>
             <button
               onClick={() => handleNavClick("guides")}
